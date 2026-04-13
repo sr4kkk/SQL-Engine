@@ -3,21 +3,28 @@
   "displayName": "SQL Engine",
   "description": "Visualize and query SQLite databases directly inside Visual Studio Code.",
   "publisher": "sr4kkk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "engines": {
     "vscode": "^1.85.0"
   },
   "main": "./dist/extension.js",
-
-  "categories": ["Visualization", "Other"],
-  "keywords": ["sqlite", "sql", "database", "db", "viewer", "vscode"],
-
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "sqlite",
+    "sql",
+    "database",
+    "db",
+    "viewer",
+    "vscode"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/sr4kkk/sql-engine"
   },
-
   "files": [
     "dist",
     "package.json",
@@ -25,7 +32,6 @@
     "LICENSE",
     "resources"
   ],
-
   "activationEvents": [
     "onCommand:dbViewer.openSqlite",
     "onCommand:dbViewer.refreshExplorer",
@@ -33,13 +39,24 @@
     "onCommand:dbViewer.runQuery",
     "onView:dbViewer.explorer"
   ],
-
   "contributes": {
     "commands": [
-      { "command": "dbViewer.openSqlite", "title": "DB: Open SQLite File" },
-      { "command": "dbViewer.refreshExplorer", "title": "DB: Refresh Explorer" },
-      { "command": "dbViewer.showTable", "title": "DB: Show Table" },
-      { "command": "dbViewer.runQuery", "title": "DB: Run Query" }
+      {
+        "command": "dbViewer.openSqlite",
+        "title": "DB: Open SQLite File"
+      },
+      {
+        "command": "dbViewer.refreshExplorer",
+        "title": "DB: Refresh Explorer"
+      },
+      {
+        "command": "dbViewer.showTable",
+        "title": "DB: Show Table"
+      },
+      {
+        "command": "dbViewer.runQuery",
+        "title": "DB: Run Query"
+      }
     ],
     "viewsContainers": {
       "activitybar": [
@@ -52,7 +69,10 @@
     },
     "views": {
       "dbViewerContainer": [
-        { "id": "dbViewer.explorer", "name": "Explorer" }
+        {
+          "id": "dbViewer.explorer",
+          "name": "Explorer"
+        }
       ]
     },
     "customEditors": [
@@ -60,27 +80,30 @@
         "viewType": "dbViewer.sqliteEditor",
         "displayName": "DB Viewer (SQLite)",
         "selector": [
-          { "filenamePattern": "*.sqlite" },
-          { "filenamePattern": "*.db" },
-          { "filenamePattern": "*.sqlite3" }
+          {
+            "filenamePattern": "*.sqlite"
+          },
+          {
+            "filenamePattern": "*.db"
+          },
+          {
+            "filenamePattern": "*.sqlite3"
+          }
         ],
         "priority": "default"
       }
     ]
   },
-
   "scripts": {
     "vscode:prepublish": "npm run build",
     "build": "tsc -p .",
     "watch": "tsc -watch -p ."
   },
-
   "devDependencies": {
     "@types/node": "^20.11.30",
     "@types/vscode": "^1.85.0",
     "typescript": "^5.4.0"
   },
-
   "dependencies": {
     "sql.js": "^1.10.3"
   }
