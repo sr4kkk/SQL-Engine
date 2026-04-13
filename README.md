@@ -76,36 +76,6 @@ Com uma interface simples e recursos práticos, a extensão permite explorar esq
 | `dbViewer.runQuery` | Executa uma consulta SQL personalizada |
 
 ---
-
-## 🤝 Contribuição
-
-Contribuições são bem-vindas.
-
-Para contribuir com o projeto:
-
-1. Faça um **fork** do repositório
-2. Crie uma branch para sua alteração:
-
-```bash
-git checkout -b feature/minha-feature
-```
-
-3. Faça o commit:
-
-```bash
-git commit -m "feat: adiciona minha feature"
-```
-
-4. Envie para o repositório remoto:
-
-```bash
-git push origin feature/minha-feature
-```
-
-5. Abra um **Pull Request**
-
----
-
 ## 📄 Licença
 
 Defina aqui a licença do projeto. Exemplo:
