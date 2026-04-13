@@ -5,6 +5,7 @@
   "publisher": "sr4kkk",
   "version": "0.0.4",
   "license": "MIT",
+  "icon": "resources/icon.svg",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -28,7 +29,9 @@
   "files": [
     "dist",
     "package.json",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "resources"
   ],
   "activationEvents": [
     "onCommand:dbViewer.openSqlite",
