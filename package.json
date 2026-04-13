@@ -1,0 +1,62 @@
+{
+  "name": "vscode-db-viewer",
+  "displayName": "DB Viewer (SQLite/SQL)",
+  "publisher": "seu-publisher",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.85.0" },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:dbViewer.openSqlite",
+    "onCommand:dbViewer.refreshExplorer",
+    "onCommand:dbViewer.showTable",
+    "onCommand:dbViewer.runQuery",
+    "onView:dbViewer.explorer"
+  ],
+  "contributes": {
+    "commands": [
+      { "command": "dbViewer.openSqlite", "title": "DB: Open SQLite File" },
+      { "command": "dbViewer.refreshExplorer", "title": "DB: Refresh Explorer" },
+      { "command": "dbViewer.showTable", "title": "DB: Show Table" },
+      { "command": "dbViewer.runQuery", "title": "DB: Run Query" }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "dbViewerContainer",
+          "title": "DB Viewer",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "dbViewerContainer": [
+        { "id": "dbViewer.explorer", "name": "Explorer" }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "dbViewer.sqliteEditor",
+        "displayName": "DB Viewer (SQLite)",
+        "selector": [
+          { "filenamePattern": "*.sqlite" },
+          { "filenamePattern": "*.db" },
+          { "filenamePattern": "*.sqlite3" }
+        ],
+        "priority": "default"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc -p .",
+    "watch": "tsc -watch -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "sql.js": "^1.10.3"
+  }
+}
