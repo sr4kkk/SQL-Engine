@@ -28,9 +28,7 @@
   "files": [
     "dist",
     "package.json",
-    "README.md",
-    "LICENSE",
-    "resources"
+    "README.md"
   ],
   "activationEvents": [
     "onCommand:dbViewer.openSqlite",

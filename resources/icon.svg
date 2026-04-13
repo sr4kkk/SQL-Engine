@@ -1,0 +1,29 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="24" x2="216" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="db" x1="64" y1="72" x2="192" y2="184" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#DBEAFE"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="208" height="208" rx="44" fill="url(#bg)"/>
+
+  <ellipse cx="112" cy="92" rx="48" ry="18" fill="url(#db)"/>
+  <path d="M64 92V132C64 141.941 85.4903 150 112 150C138.51 150 160 141.941 160 132V92" fill="url(#db)"/>
+  <ellipse cx="112" cy="132" rx="48" ry="18" fill="#E2E8F0" fill-opacity="0.9"/>
+  <path d="M64 132V168C64 177.941 85.4903 186 112 186C138.51 186 160 177.941 160 168V132" fill="url(#db)"/>
+  <ellipse cx="112" cy="168" rx="48" ry="18" fill="#BFDBFE"/>
+
+  <rect x="150" y="78" width="48" height="96" rx="10" fill="#0F172A" fill-opacity="0.18"/>
+  <rect x="158" y="88" width="32" height="16" rx="4" fill="#F8FAFC"/>
+  <rect x="158" y="112" width="32" height="8" rx="4" fill="#E0F2FE"/>
+  <rect x="158" y="126" width="22" height="8" rx="4" fill="#E0F2FE"/>
+  <rect x="158" y="140" width="28" height="8" rx="4" fill="#E0F2FE"/>
+
+  <path d="M171 192L195 168" stroke="#F8FAFC" stroke-width="12" stroke-linecap="round"/>
+  <path d="M195 192L171 168" stroke="#F8FAFC" stroke-width="12" stroke-linecap="round"/>
+</svg>

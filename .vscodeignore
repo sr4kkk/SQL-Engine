@@ -1,7 +1,0 @@
-.vscode/**
-src/**
-**/*.map
-tsconfig.json
-.gitignore
-.vscodeignore
-README_DEV.md
