@@ -3,7 +3,7 @@
   "displayName": "SQL Engine",
   "description": "Visualize and query SQLite databases directly inside Visual Studio Code.",
   "publisher": "sr4kkk",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "icon": "resources/icon.png",
   "engines": {
@@ -39,10 +39,26 @@
     "onCommand:dbViewer.refreshExplorer",
     "onCommand:dbViewer.showTable",
     "onCommand:dbViewer.runQuery",
-    "onView:dbViewer.explorer"
+    "onView:dbViewer.explorer",
+    "onStartupFinished",
+    "onCommand:dbViewer.openFile",
+    "onCommand:dbViewer.openFolder",
+    "onCommand:dbViewer.removeExplorerRoot"
   ],
   "contributes": {
     "commands": [
+      {
+        "command": "dbViewer.removeExplorerRoot",
+        "title": "DB: Remove from Explorer"
+      },
+      {
+        "command": "dbViewer.openFolder",
+        "title": "DB: Open Folder"
+      },
+      {
+        "command": "dbViewer.openFile",
+        "title": "DB: Open File"
+      },
       {
         "command": "dbViewer.openSqlite",
         "title": "DB: Open SQLite File"
@@ -97,7 +113,44 @@
         ],
         "priority": "default"
       }
-    ]
+    ],
+    "viewsWelcome": [
+      {
+        "view": "dbViewer.explorer",
+        "contents": "Selecione um arquivo ou uma pasta para começar.\n[Open File](command:dbViewer.openFile)\n[Open Folder](command:dbViewer.openFolder)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "dbViewer.openFile",
+          "when": "view == dbViewer.explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "dbViewer.openFolder",
+          "when": "view == dbViewer.explorer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "dbViewer.refreshExplorer",
+          "when": "view == dbViewer.explorer",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "dbViewer.removeExplorerRoot",
+          "when": "view == dbViewer.explorer && viewItem == dbViewer.rootFile",
+          "group": "inline"
+        },
+        {
+          "command": "dbViewer.removeExplorerRoot",
+          "when": "view == dbViewer.explorer && viewItem == dbViewer.rootFolder",
+          "group": "inline"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
