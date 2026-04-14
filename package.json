@@ -34,6 +34,7 @@
     "resources"
   ],
   "activationEvents": [
+    "onLanguage:sql",
     "onCommand:dbViewer.openSqlite",
     "onCommand:dbViewer.refreshExplorer",
     "onCommand:dbViewer.showTable",
@@ -79,7 +80,7 @@
     "customEditors": [
       {
         "viewType": "dbViewer.sqliteEditor",
-        "displayName": "DB Viewer (SQLite)",
+        "displayName": "DB Viewer (SQLite / SQL)",
         "selector": [
           {
             "filenamePattern": "*.sqlite"
@@ -89,6 +90,9 @@
           },
           {
             "filenamePattern": "*.sqlite3"
+          },
+          {
+            "filenamePattern": "*.sql"
           }
         ],
         "priority": "default"

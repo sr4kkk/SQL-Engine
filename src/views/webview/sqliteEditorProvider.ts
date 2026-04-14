@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 
 import { DbAdapter, TableInfo } from "../../db/DbAdapter";
 
-import { SQLiteAdapter } from "../../db/sqlite/SQLiteAdapter";
+import { createAdapterForFile } from "../../db/sqlite/createAdapterForFile";
 
 type DocState = {
   adapter: DbAdapter;
@@ -26,7 +26,7 @@ export class SqliteEditorProvider implements vscode.CustomReadonlyEditorProvider
     const key = uri.toString();
 
     if (!this.stateByDoc.has(key)) {
-      const adapter = await SQLiteAdapter.create(this.context, uri.fsPath);
+      const adapter = await createAdapterForFile(this.context, uri);
       this.stateByDoc.set(key, {
         adapter,
         currentTable: null,

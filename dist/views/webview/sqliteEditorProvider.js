@@ -37,7 +37,7 @@ exports.SqliteEditorProvider = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const vscode = __importStar(require("vscode"));
-const SQLiteAdapter_1 = require("../../db/sqlite/SQLiteAdapter");
+const createAdapterForFile_1 = require("../../db/sqlite/createAdapterForFile");
 class SqliteEditorProvider {
     constructor(context) {
         this.context = context;
@@ -46,7 +46,7 @@ class SqliteEditorProvider {
     async openCustomDocument(uri) {
         const key = uri.toString();
         if (!this.stateByDoc.has(key)) {
-            const adapter = await SQLiteAdapter_1.SQLiteAdapter.create(this.context, uri.fsPath);
+            const adapter = await (0, createAdapterForFile_1.createAdapterForFile)(this.context, uri);
             this.stateByDoc.set(key, {
                 adapter,
                 currentTable: null,

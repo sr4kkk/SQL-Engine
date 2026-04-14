@@ -35,12 +35,14 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
 exports.deactivate = deactivate;
+const path = __importStar(require("path"));
 const vscode = __importStar(require("vscode"));
 const DbExplorerProvider_1 = require("./views/explorer/DbExplorerProvider");
 const panel_1 = require("./views/webview/panel");
-const SQLiteAdapter_1 = require("./db/sqlite/SQLiteAdapter");
+const createAdapterForFile_1 = require("./db/sqlite/createAdapterForFile");
 const sqliteEditorProvider_1 = require("./views/webview/sqliteEditorProvider");
 const adapters = [];
+const pendingAutoOpen = new Set();
 function activate(context) {
     // Tree Explorer
     const explorer = new DbExplorerProvider_1.DbExplorerProvider(() => adapters);
@@ -49,19 +51,24 @@ function activate(context) {
     context.subscriptions.push(vscode.window.registerCustomEditorProvider(sqliteEditorProvider_1.SqliteEditorProvider.viewType, new sqliteEditorProvider_1.SqliteEditorProvider(context), { webviewOptions: { retainContextWhenHidden: true } }));
     context.subscriptions.push(vscode.commands.registerCommand("dbViewer.refreshExplorer", () => explorer.refresh()));
     context.subscriptions.push(vscode.commands.registerCommand("dbViewer.openSqlite", async (uri) => {
-        const file = uri?.fsPath ?? (await pickFile(["sqlite", "db", "sqlite3"]));
-        if (!file)
+        const targetUri = uri ?? await pickFile(["sqlite", "db", "sqlite3", "sql"]);
+        if (!targetUri)
             return;
-        // evita abrir duplicado
-        if (adapters.some(a => a.id === file)) {
-            vscode.window.showInformationMessage("Esse arquivo já está aberto no DB Viewer.");
+        await ensureOpenedInSqlEngine(context, explorer, targetUri, { revealEditor: true });
+    }));
+    const tryAutoOpen = async (uri) => {
+        if (!uri || uri.scheme !== "file" || !shouldAutoOpen(uri)) {
             return;
         }
-        const adapter = await SQLiteAdapter_1.SQLiteAdapter.create(context, file);
-        adapters.push(adapter);
-        explorer.refresh();
-        vscode.window.showInformationMessage(`Opened: ${adapter.label}`);
+        await ensureOpenedInSqlEngine(context, explorer, uri, { revealEditor: true, automatic: true });
+    };
+    context.subscriptions.push(vscode.workspace.onDidOpenTextDocument((document) => {
+        void tryAutoOpen(document.uri);
     }));
+    context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor((editor) => {
+        void tryAutoOpen(editor?.document.uri);
+    }));
+    void tryAutoOpen(vscode.window.activeTextEditor?.document.uri);
     context.subscriptions.push(vscode.commands.registerCommand("dbViewer.showTable", async (adapterId, table) => {
         const adapter = adapters.find(a => a.id === adapterId);
         if (!adapter) {
@@ -76,12 +83,40 @@ function activate(context) {
     });
 }
 function deactivate() { }
+function shouldAutoOpen(uri) {
+    const ext = path.extname(uri.fsPath).toLowerCase();
+    return ext === ".sql" || ext === ".db";
+}
+async function ensureOpenedInSqlEngine(context, explorer, uri, options) {
+    const key = uri.toString();
+    if (pendingAutoOpen.has(key)) {
+        return;
+    }
+    pendingAutoOpen.add(key);
+    try {
+        const alreadyOpen = adapters.some(adapter => adapter.id === uri.fsPath);
+        if (!alreadyOpen) {
+            const adapter = await (0, createAdapterForFile_1.createAdapterForFile)(context, uri);
+            adapters.push(adapter);
+            explorer.refresh();
+            if (!options?.automatic) {
+                vscode.window.showInformationMessage(`Opened: ${adapter.label}`);
+            }
+        }
+        if (options?.revealEditor) {
+            await vscode.commands.executeCommand("vscode.openWith", uri, sqliteEditorProvider_1.SqliteEditorProvider.viewType, vscode.ViewColumn.Active);
+        }
+    }
+    finally {
+        pendingAutoOpen.delete(key);
+    }
+}
 async function pickFile(exts) {
     const picked = await vscode.window.showOpenDialog({
         canSelectMany: false,
         filters: { Database: exts },
-        openLabel: "Open SQLite"
+        openLabel: "Open SQL Engine"
     });
-    return picked?.[0]?.fsPath;
+    return picked?.[0];
 }
 //# sourceMappingURL=extension.js.map
