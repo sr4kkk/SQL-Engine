@@ -3,7 +3,7 @@
   "displayName": "SQL Engine",
   "description": "Visualize and query SQLite databases directly inside Visual Studio Code.",
   "publisher": "sr4kkk",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "icon": "resources/icon.png",
   "engines": {
@@ -113,3 +113,4 @@
     "sql.js": "^1.10.3"
   }
 }
+
